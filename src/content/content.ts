@@ -46,6 +46,14 @@ const SHADOW_CSS = `
   padding: 9px 13px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.25);
 }
 .copy:hover { filter: brightness(1.08); }
+.pill {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  z-index: 2147483601; background: #1f2937; color: #fff;
+  font: 12px/1 system-ui, -apple-system, sans-serif; padding: 8px 14px;
+  border-radius: 999px; box-shadow: 0 2px 10px rgba(0,0,0,.3);
+  opacity: 0; transition: opacity .15s ease; pointer-events: none;
+}
+.pill.show { opacity: 1; }
 .marker {
   position: absolute; top: 0; left: 0; pointer-events: auto; cursor: pointer;
   font: 12px/1 system-ui, sans-serif; color: #2563eb;
@@ -89,6 +97,7 @@ const SHADOW_CSS = `
 
 @media (prefers-color-scheme: dark) {
   .fab { background: #374151; }
+  .pill { background: #374151; }
   .marker { color: #93c5fd; }
   .tip { background: #e5e7eb; color: #111827; }
   .popover { background: #1f2937; color: #f3f4f6; border-color: #374151; box-shadow: 0 8px 30px rgba(0,0,0,.6); }
@@ -129,6 +138,19 @@ copyBtn.className = 'copy';
 copyBtn.textContent = 'Copy all';
 copyBtn.style.display = 'none';
 shadow.appendChild(copyBtn);
+
+// Transient status pill — feedback on mode toggle when the FAB is hidden.
+const pill = document.createElement('div');
+pill.className = 'pill';
+shadow.appendChild(pill);
+let pillTimer = 0;
+function flashStatus(text: string): void {
+  if (settings?.showFab !== false) return; // FAB already shows the state
+  pill.textContent = text;
+  pill.classList.add('show');
+  clearTimeout(pillTimer);
+  pillTimer = window.setTimeout(() => pill.classList.remove('show'), 1300);
+}
 
 let markers: { el: HTMLElement; target: HTMLElement }[] = [];
 
@@ -453,6 +475,7 @@ function setMode(on: boolean): void {
   if (!on) closePopover();
   updateButton();
   applyChrome();
+  flashStatus(on ? 'Jot: note mode on (Alt+J to exit)' : 'Jot: note mode off');
 }
 
 async function copyAll(): Promise<void> {
@@ -534,6 +557,15 @@ function registerListeners(): void {
   document.addEventListener(
     'keydown',
     (e) => {
+      // Toggle note mode on Alt+J directly here, so it works regardless of
+      // whether the browser bound the extension command (flaky in Brave) and
+      // regardless of whether the floating button is shown. e.code is used so
+      // it fires even where Alt+J produces a special character (e.g. macOS).
+      if (e.altKey && !e.ctrlKey && !e.metaKey && e.code === 'KeyJ') {
+        e.preventDefault();
+        setMode(!noteMode);
+        return;
+      }
       if (e.key !== 'Escape') return;
       if (popoverEl) closePopover();
       else if (noteMode) setMode(false);
