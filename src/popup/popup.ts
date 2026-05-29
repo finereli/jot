@@ -20,6 +20,7 @@ let notes: Note[] = [];
 let settings: Settings;
 let presentAnchors = new Set<string>();
 let view: 'list' | 'settings' = 'list';
+let noteModeActive = false;
 
 const tabUrl = () => tab?.url ?? '';
 const tabOrigin = () => {
@@ -109,12 +110,23 @@ function renderList(): void {
   const head = el('div', 'head');
   const titleRow = el('div', 'titlerow');
   titleRow.appendChild(el('div', 'title', tab?.title || 'Untitled'));
-  const modeBtn = el('button', 'modebtn', '✎ Note mode');
-  modeBtn.title = 'Toggle note mode on the page (Alt+J)';
+  const modeBtn = el(
+    'button',
+    'modebtn' + (noteModeActive ? ' active' : ''),
+    noteModeActive ? '● Note mode on' : '✎ Note mode',
+  );
+  modeBtn.title = noteModeActive
+    ? 'Note mode is on — click to turn off (Alt+J)'
+    : 'Turn on note mode to pick an element (Alt+J)';
   modeBtn.addEventListener('click', () => {
-    if (tab?.id != null) {
-      chrome.tabs.sendMessage(tab.id, { type: 'jot:toggle' }).catch(() => {});
-      window.close(); // get out of the way so you can pick an element
+    if (tab?.id == null) return;
+    chrome.tabs.sendMessage(tab.id, { type: 'jot:toggle' }).catch(() => {});
+    if (noteModeActive) {
+      // Turning it off: stay open and reflect the new state.
+      noteModeActive = false;
+      render();
+    } else {
+      window.close(); // turning it on: get out of the way so you can pick
     }
   });
   titleRow.appendChild(modeBtn);
@@ -368,6 +380,7 @@ async function init(): Promise<void> {
       .sendMessage(tab.id, { type: 'jot:getAnchors' })
       .then((res) => {
         presentAnchors = new Set((res?.anchors as string[]) ?? []);
+        noteModeActive = !!res?.noteMode;
         render();
       })
       .catch(() => {

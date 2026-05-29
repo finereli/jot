@@ -604,10 +604,11 @@ function registerListeners(): void {
     if (msg?.type === 'jot:toggle') {
       setMode(!noteMode);
     } else if (msg?.type === 'jot:getAnchors') {
-      // Which note anchors currently resolve to an element on this page.
+      // Which note anchors currently resolve to an element on this page,
+      // plus the current note-mode state (for the popup's toggle).
       const keys = new Set<string>();
       for (const n of originNotes()) if (resolveFp(n.fp)) keys.add(n.anchor);
-      sendResponse({ anchors: [...keys] });
+      sendResponse({ anchors: [...keys], noteMode });
     } else if (msg?.type === 'jot:scrollTo' && msg.fp) {
       const el = resolveFp(msg.fp as Fingerprint);
       if (el) flash(el);
