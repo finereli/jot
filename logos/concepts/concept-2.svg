@@ -1,0 +1,14 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <g id="icon">
+    <!-- Card body with dog-eared top-right corner -->
+    <path d="M120 96 h208 l64 64 v256 a16 16 0 0 1 -16 16 H136 a16 16 0 0 1 -16 -16 V112 a16 16 0 0 1 16 -16 Z" fill="#2563eb"/>
+    <!-- Folded corner shadow (darker blue) -->
+    <path d="M328 96 l64 64 h-64 Z" fill="#1e40af"/>
+    <!-- Jot mark: bold white stroke -->
+    <path d="M176 224 H312" stroke="#ffffff" stroke-width="28" stroke-linecap="round" fill="none"/>
+    <path d="M176 296 H280" stroke="#ffffff" stroke-width="28" stroke-linecap="round" fill="none"/>
+    <!-- Accent marker dot -->
+    <circle cx="296" cy="328" r="36" fill="#ffffff"/>
+    <circle cx="296" cy="328" r="20" fill="#22c55e"/>
+  </g>
+</svg>

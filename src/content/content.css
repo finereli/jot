@@ -1,0 +1,24 @@
+/* These rules apply to the HOST page DOM. The floating button, popover,
+   element-picker highlight and markers live in a Shadow DOM and are styled
+   separately, so host CSS can't touch them and vice-versa. */
+
+/* In note mode the whole page is in "pick an element" mode. Devtools-style:
+   a plain arrow cursor, with the highlight box doing the work. */
+html[data-jot-mode='on'],
+html[data-jot-mode='on'] * {
+  cursor: default !important;
+}
+
+/* Transient flash when the popup asks us to scroll to an element. */
+.__jot_flash {
+  animation: __jot_flash 1.3s ease-out;
+}
+
+@keyframes __jot_flash {
+  0% {
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0);
+  }
+}

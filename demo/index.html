@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jot demo — reconciler</title>
+    <style>
+      body {
+        font: 15px/1.5 system-ui, sans-serif;
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 0 16px;
+        color: #111;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 110px 1fr 90px 110px;
+        gap: 12px;
+        padding: 10px 12px;
+        border-bottom: 1px solid #eee;
+        align-items: center;
+      }
+      .row .amt {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      .cat {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: #eef2ff;
+        color: #3730a3;
+        font-size: 12px;
+      }
+      .hint {
+        color: #6b7280;
+        font-size: 13px;
+        margin-bottom: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Reconciler — May transactions</h1>
+    <p class="hint">
+      A plain page — no special markup. Load the Jot extension, press
+      <strong>Alt+J</strong>, point at any row, cell, or heading, and click to annotate it.
+    </p>
+
+    <div class="row">
+      <span>2026-05-21</span>
+      <span>Aliexpress</span>
+      <span class="cat">Shopping</span>
+      <span class="amt">-37.41</span>
+    </div>
+
+    <div class="row">
+      <span>2026-05-22</span>
+      <span>Loblaws</span>
+      <span class="cat">Groceries</span>
+      <span class="amt">-84.20</span>
+    </div>
+
+    <div class="row">
+      <span>2026-05-23</span>
+      <span>Acme Payroll</span>
+      <span class="cat">Income</span>
+      <span class="amt">+2,400.00</span>
+    </div>
+
+    <p style="margin-top: 32px"><strong>Net worth:</strong> $128,402</p>
+  </body>
+</html>

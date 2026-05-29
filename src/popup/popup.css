@@ -1,0 +1,256 @@
+:root {
+  --blue: #2563eb;
+  --ink: #111827;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --bg: #ffffff;
+  --soft: #f9fafb;
+  --chip: #eef2ff;
+  --chip-hover: #e0e7ff;
+  --danger-bg: #fee2e2;
+  --danger-fg: #b91c1c;
+  --danger-border: #fecaca;
+  --toast-bg: #1f2937;
+  --toast-fg: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --blue: #3b82f6;
+    --ink: #f3f4f6;
+    --muted: #9ca3af;
+    --line: #374151;
+    --bg: #1f2937;
+    --soft: #111827;
+    --chip: #374151;
+    --chip-hover: #4b5563;
+    --danger-bg: #3f1d1d;
+    --danger-fg: #fca5a5;
+    --danger-border: #7f1d1d;
+    --toast-bg: #e5e7eb;
+    --toast-fg: #111827;
+  }
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  width: 360px;
+  max-height: 560px;
+  font: 13px/1.4 system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  max-height: 560px;
+}
+
+.head {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--line);
+}
+.title {
+  font-weight: 600;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.url {
+  color: var(--muted);
+  font-size: 11px;
+  font-family: ui-monospace, monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.sub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.count {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.list {
+  overflow-y: auto;
+  flex: 1;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 24px 12px;
+}
+
+.note {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--soft);
+}
+.note .label {
+  font-size: 11px;
+  color: var(--blue);
+  font-weight: 600;
+  cursor: pointer;
+  word-break: break-word;
+}
+.note .label.orphan {
+  color: var(--muted);
+  cursor: default;
+}
+.note .page {
+  margin-top: 4px;
+  font-size: 10px;
+  color: var(--muted);
+  font-family: ui-monospace, monospace;
+  word-break: break-all;
+}
+.note .badge {
+  font-size: 10px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 4px;
+  margin-left: 4px;
+}
+.note .text {
+  margin-top: 4px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.note .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+.note .when {
+  color: var(--muted);
+  font-size: 11px;
+}
+.note .acts {
+  display: flex;
+  gap: 4px;
+}
+.icon {
+  border: none;
+  background: var(--chip);
+  color: var(--ink);
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.icon:hover {
+  background: var(--chip-hover);
+}
+
+.foot {
+  border-top: 1px solid var(--line);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.btns {
+  display: flex;
+  gap: 8px;
+}
+.btn {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: var(--chip);
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.btn.primary {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+.btn.danger {
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-color: var(--danger-border);
+}
+.btn:hover {
+  filter: brightness(0.97);
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.linkrow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+.link {
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.settings {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.settings h2 {
+  font-size: 13px;
+  margin: 0;
+}
+.settings .opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  background: var(--toast-bg);
+  color: var(--toast-fg);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+}

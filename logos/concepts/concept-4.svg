@@ -1,0 +1,7 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jot">
+  <g id="icon">
+    <rect x="96" y="96" width="320" height="320" rx="84" fill="#2563eb"/>
+    <path d="M196 264 L240 308 L324 212" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="400" cy="112" r="56" fill="#f59e0b" stroke="#ffffff" stroke-width="16"/>
+  </g>
+</svg>

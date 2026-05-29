@@ -1,0 +1,24 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jot logo">
+  <g id="icon">
+    <rect x="16" y="16" width="480" height="480" rx="96" fill="#2563eb"/>
+    <!-- J body: top bar + descending stem curving into a marker nib at the bottom -->
+    <path fill="#ffffff" d="
+      M 168 120
+      h 184
+      a 28 28 0 0 1 0 56
+      h -56
+      v 168
+      a 96 96 0 0 1 -47 83
+      l -64 -44
+      a 18 18 0 0 1 21 -29
+      l 30 20
+      a 40 40 0 0 0 16 -32
+      v -166
+      h -54
+      a 28 28 0 0 1 0 -56
+      z
+    "/>
+    <!-- Nib tip accent -->
+    <path fill="#1e40af" d="M 226 459 l -42 -29 a 18 18 0 0 1 -8 -16 l 64 44 a 96 96 0 0 1 -14 1 z"/>
+  </g>
+</svg>
