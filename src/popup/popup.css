@@ -63,12 +63,35 @@ body {
   padding: 12px 14px 10px;
   border-bottom: 1px solid var(--line);
 }
+.titlerow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
 .title {
+  flex: 1;
+  min-width: 0;
   font-weight: 600;
   font-size: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.modebtn {
+  flex: none;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.modebtn:hover {
+  filter: brightness(1.05);
 }
 .url {
   color: var(--muted);

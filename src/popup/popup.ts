@@ -107,7 +107,18 @@ function renderList(): void {
   app.innerHTML = '';
 
   const head = el('div', 'head');
-  head.appendChild(el('div', 'title', tab?.title || 'Untitled'));
+  const titleRow = el('div', 'titlerow');
+  titleRow.appendChild(el('div', 'title', tab?.title || 'Untitled'));
+  const modeBtn = el('button', 'modebtn', '✎ Note mode');
+  modeBtn.title = 'Toggle note mode on the page (Alt+J)';
+  modeBtn.addEventListener('click', () => {
+    if (tab?.id != null) {
+      chrome.tabs.sendMessage(tab.id, { type: 'jot:toggle' }).catch(() => {});
+      window.close(); // get out of the way so you can pick an element
+    }
+  });
+  titleRow.appendChild(modeBtn);
+  head.appendChild(titleRow);
   head.appendChild(el('div', 'url', tabUrl()));
 
   const sub = el('div', 'sub');
