@@ -69,8 +69,17 @@ function visibleNotes(): Note[] {
     });
 }
 
+// Nudge the active tab's content script to re-read storage and re-render
+// (storage.onChanged can be flaky in content scripts, notably in Brave).
+function notifyTab(): void {
+  if (tab?.id != null) {
+    chrome.tabs.sendMessage(tab.id, { type: 'jot:reload' }).catch(() => {});
+  }
+}
+
 async function reload(): Promise<void> {
   notes = await getNotes();
+  notifyTab();
   render();
 }
 
@@ -255,6 +264,7 @@ function renderSettings(): void {
   cbResolved.addEventListener('change', async () => {
     settings.includeResolvedInExport = cbResolved.checked;
     await saveSettings(settings);
+    notifyTab();
   });
   optResolved.append(cbResolved, document.createTextNode('Include resolved notes in Copy all'));
   wrap.appendChild(optResolved);
@@ -267,6 +277,7 @@ function renderSettings(): void {
   cbFab.addEventListener('change', async () => {
     settings.showFab = cbFab.checked;
     await saveSettings(settings);
+    notifyTab();
   });
   optFab.append(cbFab, document.createTextNode('Show floating button on pages'));
   wrap.appendChild(optFab);
@@ -282,7 +293,12 @@ function renderSettings(): void {
     else set.delete(origin);
     settings.disabledOrigins = [...set];
     await saveSettings(settings);
-    toast(cbOrigin.checked ? 'Jot disabled here (reload page)' : 'Jot enabled here (reload page)');
+    notifyTab();
+    if (cbOrigin.checked) {
+      toast('Jot disabled on this site');
+    } else {
+      toast('Jot enabled — reload the page'); // re-enabling needs the content script back
+    }
   });
   optOrigin.append(
     cbOrigin,

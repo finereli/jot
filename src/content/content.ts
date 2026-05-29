@@ -579,6 +579,18 @@ function registerListeners(): void {
     } else if (msg?.type === 'jot:scrollTo' && msg.fp) {
       const el = resolveFp(msg.fp as Fingerprint);
       if (el) flash(el);
+    } else if (msg?.type === 'jot:reload') {
+      // Explicit nudge from the popup (storage.onChanged can be flaky in
+      // content scripts), e.g. after a settings change.
+      void (async () => {
+        settings = await getSettings();
+        if (settings.disabledOrigins.includes(ORIGIN) && enabled) {
+          enabled = false;
+          host.remove();
+          return;
+        }
+        refresh();
+      })();
     }
     return false;
   });
